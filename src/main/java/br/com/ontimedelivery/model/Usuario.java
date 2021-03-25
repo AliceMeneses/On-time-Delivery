@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+
+@NamedQuery(name="existiUsuario", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
 
 @Entity
 public class Usuario {
@@ -18,8 +21,10 @@ public class Usuario {
 	@Column(length = 9)
 	private String telefone;
 	
-	private String email;
-	
+	private String email;	
+	@Column(length = 15)
+	private String senha;
+
 	public Usuario() {
 
 	}
@@ -46,5 +51,7 @@ public class Usuario {
 		return email;
 	}
 
-
+	public String getSenha() {
+		return senha;
+	}
 }

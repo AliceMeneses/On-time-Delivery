@@ -18,4 +18,12 @@ public class ConexaoBanco {
 		
 		return entityManager;
 	}
+	
+	public static void desconectar() {
+		
+		if(entityManager == null) {
+			entityManager.close();
+		}
+		
+	}
 }
