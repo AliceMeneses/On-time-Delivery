@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
-@NamedQuery(name="existiUsuario", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
+@NamedQuery(name="usuarioCadastrado", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
 
 @Entity
 public class Usuario {
@@ -22,6 +22,7 @@ public class Usuario {
 	private String telefone;
 	
 	private String email;	
+	
 	@Column(length = 15)
 	private String senha;
 
@@ -29,10 +30,11 @@ public class Usuario {
 
 	}
 
-	public Usuario(String nome, String telefone, String email) {
+	public Usuario(String nome, String telefone, String email, String senha) {
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -54,4 +56,14 @@ public class Usuario {
 	public String getSenha() {
 		return senha;
 	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
 }

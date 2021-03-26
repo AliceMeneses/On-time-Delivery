@@ -23,9 +23,9 @@ public class UsuarioDAO {
 		
 	}
 	
-	public boolean existiUsuario(Usuario usuario) {
+	public boolean usuarioCadastrado(Usuario usuario) {
 		
-		TypedQuery<Usuario> query = entityManager.createNamedQuery("existiUsuario", Usuario.class);
+		TypedQuery<Usuario> query = entityManager.createNamedQuery("usuarioCadastrado", Usuario.class);
 		query.setParameter("email", usuario.getEmail());
 		query.setParameter("senha", usuario.getSenha());
 		
