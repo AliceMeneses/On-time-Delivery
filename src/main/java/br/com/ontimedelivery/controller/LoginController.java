@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
-import javax.swing.text.StyledEditorKit.BoldAction;
 
 import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.UsuarioDAO;

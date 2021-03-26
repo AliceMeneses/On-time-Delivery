@@ -1,7 +1,5 @@
 package br.com.ontimedelivery.dao;
 
-import java.math.BigDecimal;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
