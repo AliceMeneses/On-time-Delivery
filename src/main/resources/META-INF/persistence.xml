@@ -9,7 +9,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>br.com.ontimedelivery.model.Endereco</class>
 		<class>br.com.ontimedelivery.model.Pedido</class>
-		<class>br.com.ontimedelivery.model.Endereco</class>
+		<class>br.com.ontimedelivery.model.Usuario</class>
 		
 		
 		<properties>
