@@ -24,6 +24,9 @@ public class LoginController implements Initializable {
 	@FXML
 	private Button btnLogin;
 
+        @FXML
+        private Button btnSingUpRote;
+        
 	private EntityManager entityManager;
 
 	@Override
