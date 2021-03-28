@@ -92,10 +92,5 @@
             <Font name="Tahoma" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnPedidosViewRoute" layoutX="836.0" layoutY="18.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="87.0" style="-fx-background-color: #f5f0ea; -fx-border-color: #000000; -fx-border-radius: 4;" text="Ver pedidos">
-         <font>
-            <Font name="Tahoma" size="12.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
