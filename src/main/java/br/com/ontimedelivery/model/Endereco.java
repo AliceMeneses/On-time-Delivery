@@ -12,24 +12,27 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String cidade;
-	private String endereco;
+	private String localidade;
+	private String logradouro;
 	private String numero;
+	private String complemento;
 	private String bairro;
-	private String estado;
 	
-	@Column(length = 8)
+	@Column(columnDefinition = "char", length = 2)
+	private String uf;
+	
+	@Column(length = 9)
 	private String cep;
 	
 	public Endereco() {
 	}
 
-	public Endereco(String cidade, String endereco, String numero, String bairro, String estado, String cep) {
-		this.cidade = cidade;
-		this.endereco = endereco;
+	public Endereco(String logradouro, String numero, String bairro, String localidade, String uf, String cep) {
+		this.logradouro = logradouro;
 		this.numero = numero;
 		this.bairro = bairro;
-		this.estado = estado;
+		this.localidade = localidade;
+		this.uf = uf;
 		this.cep = cep;
 	}
 
@@ -37,24 +40,52 @@ public class Endereco {
 		return id;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalidade() {
+		return localidade;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 
-	public String getNumero() {
-		return numero;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public String getComplemento() {
+		return complemento;
 	}
 
 	public String getBairro() {
 		return bairro;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getUF() {
+		return uf;
+	}
+	
+	public String getNumero() {
+		return numero;
 	}
 
 	public String getCep() {
