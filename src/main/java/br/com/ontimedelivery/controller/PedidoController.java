@@ -249,5 +249,4 @@ public class PedidoController implements Initializable {
 		
 		return camposPreenchidos && CEPsValidos && numerosValidos;
 	}
-
 }
