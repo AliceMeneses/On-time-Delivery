@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
-@NamedQuery(name="usuarioCadastrado", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
+@NamedQuery(name="buscarUsuario", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
 
 @Entity
 public class Usuario {
