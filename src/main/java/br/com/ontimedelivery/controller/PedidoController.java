@@ -12,12 +12,14 @@ import javax.persistence.EntityManager;
 
 import br.com.ontimedelivery.buscardordeendereco.BuscaEndereco;
 import br.com.ontimedelivery.dao.ConexaoBanco;
+import br.com.ontimedelivery.dao.EnderecoDAO;
 import br.com.ontimedelivery.dao.PedidoDAO;
 import br.com.ontimedelivery.model.Endereco;
 import br.com.ontimedelivery.model.Pedido;
 import br.com.ontimedelivery.model.PesoPedido;
 import br.com.ontimedelivery.model.TipoVeiculo;
-import br.com.ontimedelivery.validacao.ValidarCampos;
+import br.com.ontimedelivery.model.Usuario;
+import br.com.ontimedelivery.validacao.ValidarDados;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,46 +35,46 @@ public class PedidoController implements Initializable {
 	private EntityManager entityManager;
 
 	@FXML
-	private TextField inputCepRetirada;
+	private TextField tfCepRetirada;
 
 	@FXML
-	private TextField inputLogradouroRetirada;
+	private TextField tfLogradouroRetirada;
 
 	@FXML 
-	private TextField inputComplementoRetirada;
+	private TextField tfComplementoRetirada;
 	
 	@FXML
-	private TextField inputNumeroRetirada;
+	private TextField tfNumeroRetirada;
 
 	@FXML
-	private TextField inputBairroRetirada;
+	private TextField tfBairroRetirada;
 
 	@FXML
-	private TextField inputLocalidadeRetirada;
+	private TextField tfLocalidadeRetirada;
 	
 	@FXML
-	private TextField inputUfRetirada;
+	private TextField tfUfRetirada;
 	
 	@FXML
-	private TextField tfEnderecoDeEntregaCEP;
+	private TextField tfCepEntrega;
 
 	@FXML
-	private TextField inputLogradouroEntrega;
+	private TextField tfLogradouroEntrega;
 
 	@FXML
-	private TextField inputComplementoEntrega;
+	private TextField tfComplementoEntrega;
 
 	@FXML
-	private TextField inputNumeroEntrega;
+	private TextField tfNumeroEntrega;
 	
 	@FXML
-	private TextField inputBairroEntrega;
+	private TextField tfBairroEntrega;
 
 	@FXML
-	private TextField inputLocalidadeEntrega;
+	private TextField tfLocalidadeEntrega;
 	
 	@FXML
-	private TextField inputUfEntrega;
+	private TextField tfUfEntrega;
 	
 	@FXML
     private TextArea dsPedido;
@@ -94,42 +96,42 @@ public class PedidoController implements Initializable {
 	
     @FXML
     private Button btnFazerPedido;
-
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		entityManager = ConexaoBanco.getEntityManager();
 			
-		tfEnderecoDeEntregaCEP.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+		tfCepEntrega.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 			
-			boolean inputsEnderecoEntregaVazios = inputLogradouroEntrega.getText().isEmpty() && inputBairroEntrega.getText().isEmpty()
-					&& inputLocalidadeEntrega.getText().isEmpty() &&	inputUfEntrega.getText().isEmpty();
+			Boolean textFieldsEnderecoEntregaVazios = tfLogradouroEntrega.getText().isEmpty() && tfBairroEntrega.getText().isEmpty()
+					&& tfLocalidadeEntrega.getText().isEmpty() &&	tfUfEntrega.getText().isEmpty();
 			
-			boolean inputCepNaoPreenchido = !tfEnderecoDeEntregaCEP.getText().isEmpty();
+			Boolean tfCepNaoPreenchido = !tfCepEntrega.getText().isEmpty();
 			
-			if (!isNowFocused && inputsEnderecoEntregaVazios && inputCepNaoPreenchido) {
+			if (!isNowFocused && textFieldsEnderecoEntregaVazios && tfCepNaoPreenchido) {
 		    	
-		    	Endereco enderecoEntrega = buscaEndereco(tfEnderecoDeEntregaCEP.getText());
+				Endereco enderecoEntrega = buscaEndereco(tfCepEntrega.getText());
 		    	
 		    	if(enderecoEntrega != null) {
-		    		setInputsEnderecoEntrega(enderecoEntrega);		    
+		    		setTextFieldsEnderecoEntrega(enderecoEntrega);		    
 		    	}
 		    }
 		});		
 			
-		inputCepRetirada.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+		tfCepRetirada.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 			
-			boolean camposEnderecoRetiradaVazios = inputLogradouroRetirada.getText().isEmpty() && inputBairroRetirada.getText().isEmpty()
-					&& inputLocalidadeRetirada.getText().isEmpty() && inputUfRetirada.getText().isEmpty();
+			Boolean textFieldsEnderecoRetiradaVazios = tfLogradouroRetirada.getText().isEmpty() && tfBairroRetirada.getText().isEmpty()
+					&& tfLocalidadeRetirada.getText().isEmpty() && tfUfRetirada.getText().isEmpty();
 			
-			boolean inputCepNaoPreenchido = !inputCepRetirada.getText().isEmpty();
+			Boolean tfCepNaoPreenchido = !tfCepRetirada.getText().isEmpty();
 			
-			if (!isNowFocused && camposEnderecoRetiradaVazios && inputCepNaoPreenchido) {
+			if (!isNowFocused && textFieldsEnderecoRetiradaVazios && tfCepNaoPreenchido) {
 		    	
-		    	Endereco enderecoRetirada= buscaEndereco(inputCepRetirada.getText());
+		    	Endereco enderecoRetirada= buscaEndereco(tfCepRetirada.getText());
 		    	
 		    	if(enderecoRetirada != null) {
-		    		setCamposEnderecoRetirada(enderecoRetirada);
+		    		setTextFieldsEnderecoRetirada(enderecoRetirada);
 		    	}
 		    }
 		});
@@ -137,55 +139,63 @@ public class PedidoController implements Initializable {
 	
 	}
 	
-
-	public void setInputsEnderecoEntrega(Endereco enderecoEntrega) {
-		inputLogradouroEntrega.setText(enderecoEntrega.getLogradouro());
-		inputBairroEntrega.setText(enderecoEntrega.getBairro());
-		inputLocalidadeEntrega.setText(enderecoEntrega.getLocalidade());
-		inputUfEntrega.setText(enderecoEntrega.getUF());
-
+	public void setTextFieldsEnderecoEntrega(Endereco enderecoEntrega) {
+		
+		tfLogradouroEntrega.setText(enderecoEntrega.getLogradouro());
+		tfBairroEntrega.setText(enderecoEntrega.getBairro());
+		tfLocalidadeEntrega.setText(enderecoEntrega.getLocalidade());
+		tfUfEntrega.setText(enderecoEntrega.getUF());
 	}
 	
-	public void setCamposEnderecoRetirada(Endereco enderecoRetirada) {
-		inputLogradouroRetirada.setText(enderecoRetirada.getLogradouro());
-		inputBairroRetirada.setText(enderecoRetirada.getBairro());
-		inputLocalidadeRetirada.setText(enderecoRetirada.getLocalidade());
-		inputUfRetirada.setText(enderecoRetirada.getUF());
-
+	public void setTextFieldsEnderecoRetirada(Endereco enderecoRetirada) {
+		
+		tfLogradouroRetirada.setText(enderecoRetirada.getLogradouro());
+		tfBairroRetirada.setText(enderecoRetirada.getBairro());
+		tfLocalidadeRetirada.setText(enderecoRetirada.getLocalidade());
+		tfUfRetirada.setText(enderecoRetirada.getUF());
 	}
+	
 	
 	@FXML
 	public void fazerPedido(ActionEvent event) {
-		
-		boolean dadosValidos = validarDados();
+
+		Boolean dadosValidos = validarDados();
 		
 		if(dadosValidos) {
-			PedidoDAO pedidoDAO;
-	
+			PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
+			EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
 			Pedido pedido = criaPedido();
-	
-			pedidoDAO = new PedidoDAO(entityManager);
-			
+
+			enderecoDAO.inserir(pedido.getEnderecoEntrega());
+			enderecoDAO.inserir(pedido.getEnderecoRetirada());
+						
 			pedidoDAO.inserir(pedido);
 		}
 
 	}
 
 	public Pedido criaPedido() {
+		
+		Usuario usuario = (Usuario) btnFazerPedido.getScene().getUserData();
 
-		TipoVeiculo tipoTransporte;
+		TipoVeiculo tipoVeiculo;
 		PesoPedido pesoPedido;
-		BuscaEndereco buscaCEP = new BuscaEndereco();
+		Boolean servicoDeCargaEDescarga = false;
 
-		Endereco enderecoDeEntrega = buscaCEP.procurarPor(tfEnderecoDeEntregaCEP.getText());
-		Endereco enderecoDeRetirada = buscaCEP.procurarPor(inputCepRetirada.getText());
+		Endereco enderecoEntrega = new Endereco(tfLogradouroEntrega.getText(),	tfNumeroEntrega.getText(), 
+				tfBairroEntrega.getText(), tfLocalidadeEntrega.getText(), tfUfEntrega.getText(), 
+				tfCepEntrega.getText());
+		
+		Endereco enderecoRetirada = new Endereco(tfLogradouroRetirada.getText(), tfNumeroRetirada.getText(), 
+				tfBairroRetirada.getText(), tfLocalidadeRetirada.getText(), tfUfRetirada.getText(), 
+				tfCepRetirada.getText());
 
 		if (radioBtnCarro.isSelected()) {
-			tipoTransporte = TipoVeiculo.CARRO;
+			tipoVeiculo = TipoVeiculo.CARRO;
 		} else if (radioBtnMoto.isSelected()) {
-			tipoTransporte = TipoVeiculo.MOTO;
+			tipoVeiculo = TipoVeiculo.MOTO;
 		} else {
-			tipoTransporte = TipoVeiculo.VAN;
+			tipoVeiculo = TipoVeiculo.VAN;
 		}
 	
 		if (radioBtn25kg.isSelected()) {
@@ -199,9 +209,13 @@ public class PedidoController implements Initializable {
 		} else {
 			pesoPedido = PesoPedido.ATE200KG;
 		}
+		
+		 if(checkServicoCarregamento.selectedProperty().getValue()){
+			 servicoDeCargaEDescarga = true;
+		 }
 
-		Pedido pedido = new Pedido(enderecoDeEntrega, enderecoDeRetirada, new BigDecimal(10.50), LocalDateTime.now(),
-				LocalDate.of(2021, Month.APRIL, 17), pesoPedido, tipoTransporte);
+		Pedido pedido = new Pedido(usuario, enderecoEntrega, enderecoRetirada, new BigDecimal(10.50), LocalDateTime.now(),
+				LocalDate.of(2021, Month.APRIL, 17), pesoPedido, tipoVeiculo, dsPedido.getText(), servicoDeCargaEDescarga);
 
 		return pedido;
 	}
@@ -214,39 +228,37 @@ public class PedidoController implements Initializable {
 
 	}
 	
-	private boolean validarDados() {
+	private Boolean validarDados() {
 
-		ValidarCampos validarCampos = new ValidarCampos();
+		ValidarDados validarDados = new ValidarDados();
 		
-		boolean textFieldsPreenchidos, transportePreenchido, pesoPreenchido, CEPDoEnderecoEntregaValido, 
-		CEPDoEnderecoRetiradaValido, numeroDoEnderecoEntregaValido, numeroDoEnderecoRetiradaValido;
+		Boolean textFieldsPreenchidos, cepEntregaValido, 
+		cepRetiradaValido, numeroEntregaValido, numeroRetiradaValido, textAreaPreenchido;
 		
-		textFieldsPreenchidos = transportePreenchido = pesoPreenchido = CEPDoEnderecoEntregaValido = 
-		CEPDoEnderecoRetiradaValido = numeroDoEnderecoEntregaValido = numeroDoEnderecoRetiradaValido = false;
+		textFieldsPreenchidos = cepEntregaValido = textAreaPreenchido = 
+				cepRetiradaValido = numeroEntregaValido = numeroRetiradaValido = false;
 		
-		textFieldsPreenchidos = validarCampos.procurarTextFieldVazio(Arrays.asList(inputLogradouroRetirada,
-				inputComplementoRetirada, inputBairroRetirada, inputLocalidadeRetirada,
-				inputCepRetirada, tfEnderecoDeEntregaCEP, inputLogradouroEntrega, 
-				inputComplementoEntrega,	inputBairroEntrega, inputLocalidadeEntrega,
-				inputUfEntrega, inputUfRetirada));
-
-		transportePreenchido = validarCampos.procurarRadioButtonsVazios(Arrays.asList(radioBtnCarro, radioBtnCarro, radioBtnVan));
-		pesoPreenchido = validarCampos.procurarRadioButtonsVazios(Arrays.asList(radioBtn25kg, radioBtn50kg, radioBtn100kg, radioBtn150kg, radioBtn200kg));
+		textFieldsPreenchidos = validarDados.procurarTextFieldVazio(Arrays.asList(tfLogradouroRetirada,
+			    tfBairroRetirada, tfLocalidadeRetirada,	tfCepRetirada, tfCepEntrega, tfLogradouroEntrega, 
+				tfBairroEntrega, tfLocalidadeEntrega, tfUfEntrega, tfUfRetirada, tfNumeroEntrega,
+				tfNumeroRetirada));
 		
-		boolean camposPreenchidos = textFieldsPreenchidos && transportePreenchido && pesoPreenchido;
+		textAreaPreenchido = validarDados.procurarTextAreaVazio(dsPedido);
+		
+		Boolean camposPreenchidos = textFieldsPreenchidos && textAreaPreenchido;
 		
 		if(camposPreenchidos) {
 			
-			CEPDoEnderecoEntregaValido = validarCampos.validarCEP(tfEnderecoDeEntregaCEP.getText());
-			CEPDoEnderecoRetiradaValido = validarCampos.validarCEP(inputCepRetirada.getText());
+			cepEntregaValido = validarDados.validarCEP(tfCepEntrega.getText().trim());
+			cepRetiradaValido = validarDados.validarCEP(tfCepRetirada.getText().trim());
 			
-			numeroDoEnderecoEntregaValido = validarCampos.validarNumero(inputComplementoEntrega.getText());
-			numeroDoEnderecoRetiradaValido = validarCampos.validarNumero(inputComplementoRetirada.getText());
+			numeroEntregaValido = validarDados.validarNumero(tfNumeroEntrega.getText());
+			numeroRetiradaValido = validarDados.validarNumero(tfNumeroRetirada.getText());
 		}
 		
-		boolean CEPsValidos = CEPDoEnderecoEntregaValido && CEPDoEnderecoRetiradaValido;
-		boolean numerosValidos =  numeroDoEnderecoEntregaValido && numeroDoEnderecoRetiradaValido;
-		
+		Boolean CEPsValidos = cepEntregaValido && cepRetiradaValido;
+		Boolean numerosValidos =  numeroEntregaValido && numeroRetiradaValido;
+
 		return camposPreenchidos && CEPsValidos && numerosValidos;
 	}
 }
