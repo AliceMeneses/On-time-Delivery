@@ -1,6 +1,6 @@
 package br.com.ontimedelivery.model;
 
 public enum PesoPedido {
-	ATE25, ATE50, ATE100, ATE150, ATE200;
+	ATE25KG, ATE50KG, ATE100KG, ATE150KG, ATE200KG;
 	
 }
