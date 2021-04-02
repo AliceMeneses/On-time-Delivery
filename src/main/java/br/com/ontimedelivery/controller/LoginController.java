@@ -10,7 +10,7 @@ import br.com.ontimedelivery.Main;
 import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.UsuarioDAO;
 import br.com.ontimedelivery.model.Usuario;
-import br.com.ontimedelivery.validacao.ValidarCampos;
+import br.com.ontimedelivery.validacao.ValidarDados;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,9 +24,8 @@ public class LoginController implements Initializable {
 	private TextField tfSenha;
 	@FXML
 	private Button btnLogin;
-
-        @FXML
-        private Button btnSingUpRote;
+    @FXML
+    private Button btnSingUpRote;
         
 	private EntityManager entityManager;
 
@@ -48,39 +47,35 @@ public class LoginController implements Initializable {
 			usuario.setEmail(tfEmail.getText());
 			usuario.setSenha(tfSenha.getText());
 			
-			login(usuario);
+			UsuarioDAO usuarioDAO;
+			ValidarDados validarDados = new ValidarDados();
+			
+			usuarioDAO = new UsuarioDAO(entityManager);
+
+			usuario = usuarioDAO.buscarUsuario(usuario);
+
+			if (usuario != null) {
+				validarDados.validarTextFieldsDoUsuario(tfEmail, tfSenha);
+				Main.mudarParaPedidoScene(usuario);
+			} else {
+				validarDados.invalidarTextFieldsDosUsuario(tfEmail, tfSenha);
+			}
 		}
 		
 	}
 
 	private boolean validarDados() {
 
-		ValidarCampos validarCampos = new ValidarCampos();
-		boolean camposPreenchidos, emailValido = false;
+		ValidarDados validarDados = new ValidarDados();
+		boolean textFieldsPreenchidos, emailValido = false;
 		
-		camposPreenchidos = validarCampos.procurarTextFieldVazio(Arrays.asList(tfEmail, tfSenha));
+		textFieldsPreenchidos = validarDados.procurarTextFieldVazio(Arrays.asList(tfEmail, tfSenha));
 
-		if(camposPreenchidos) {
-			emailValido = validarCampos.validarEmail(tfEmail);		
+		if(textFieldsPreenchidos) {
+			emailValido = validarDados.validarEmail(tfEmail);		
 		}
 		
-		return emailValido && camposPreenchidos;
-	}
-
-	private void login(Usuario usuario) {
-		UsuarioDAO usuarioDAO;
-		ValidarCampos validarCampos = new ValidarCampos();
-		
-		usuarioDAO = new UsuarioDAO(entityManager);
-
-		boolean existeUsuario = usuarioDAO.usuarioCadastrado(usuario);
-
-		if (existeUsuario) {
-			validarCampos.validarCamposDoUsuario(tfEmail, tfSenha);
-			Main.trocarScene("Pedido");
-		} else {
-			validarCampos.invalidarCamposDosUsuario(tfEmail, tfSenha);
-		}
+		return emailValido && textFieldsPreenchidos;
 	}
 
 }
