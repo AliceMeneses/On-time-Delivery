@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="937.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PedidoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="937.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ontimedelivery.controller.PedidoController">
    <children>
       <AnchorPane layoutY="61.0" prefHeight="419.0" prefWidth="600.0" style="-fx-background-color: #6aac5c;" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
          <children>
@@ -53,24 +53,24 @@
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="inputCepRetirada" layoutX="423.0" layoutY="128.0" prefHeight="25.0" prefWidth="147.0" promptText="CEP" />
-            <TextField fx:id="inputRuaRetirada" layoutX="578.0" layoutY="128.0" prefHeight="25.0" prefWidth="348.0" promptText="Rua" />
-            <TextField fx:id="inputBairroRetirada" layoutX="527.0" layoutY="181.0" prefHeight="25.0" prefWidth="153.0" promptText="Bairro" />
-            <TextField fx:id="inputCidadeRetirada" layoutX="687.0" layoutY="181.0" prefHeight="25.0" prefWidth="153.0" promptText="Cidade" />
-            <TextField fx:id="inputUfRetirada" layoutX="857.0" layoutY="181.0" prefHeight="25.0" prefWidth="69.0" promptText="UF" />
-            <TextField fx:id="inputComplementoRetirada" layoutX="421.0" layoutY="181.0" prefHeight="25.0" prefWidth="95.0" promptText="Complemento" />
+            <TextField fx:id="tfCepRetirada" layoutX="423.0" layoutY="128.0" prefHeight="25.0" prefWidth="147.0" promptText="CEP" />
+            <TextField fx:id="tfLogradouroRetirada" layoutX="578.0" layoutY="128.0" prefHeight="25.0" prefWidth="268.0" promptText="Rua" />
+            <TextField fx:id="tfBairroRetirada" layoutX="527.0" layoutY="181.0" prefHeight="25.0" prefWidth="153.0" promptText="Bairro" />
+            <TextField fx:id="tfLocalidadeRetirada" layoutX="687.0" layoutY="181.0" prefHeight="25.0" prefWidth="153.0" promptText="Cidade" />
+            <TextField fx:id="tfUfRetirada" layoutX="857.0" layoutY="181.0" prefHeight="25.0" prefWidth="69.0" promptText="UF" />
+            <TextField fx:id="tfComplementoRetirada" layoutX="421.0" layoutY="181.0" prefHeight="25.0" prefWidth="95.0" promptText="Complemento" />
             <Label layoutX="607.0" layoutY="233.0" text="Endereço de entrega" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="inputCepEntrega" layoutX="423.0" layoutY="264.0" prefHeight="25.0" prefWidth="147.0" promptText="CEP" />
-            <TextField fx:id="inputRuaEntrega" layoutX="580.0" layoutY="264.0" prefHeight="25.0" prefWidth="348.0" promptText="Rua" />
-            <TextField fx:id="inputUfEntrega" layoutX="857.0" layoutY="301.0" prefHeight="25.0" prefWidth="69.0" promptText="UF" />
-            <TextField fx:id="inputCidadeRetirada" layoutX="687.0" layoutY="309.0" prefHeight="25.0" prefWidth="153.0" promptText="Cidade" />
-            <TextField fx:id="inputBairroRetirada" layoutX="527.0" layoutY="309.0" prefHeight="25.0" prefWidth="153.0" promptText="Bairro" />
-            <TextField fx:id="inputComplementoEntrega" layoutX="421.0" layoutY="309.0" prefHeight="25.0" prefWidth="95.0" promptText="Complemento" />
-            <Button fx:id="btnFazerPedido" layoutX="767.0" layoutY="379.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Fazer pedido" textFill="WHITE">
+            <TextField fx:id="tfCepEntrega" layoutX="423.0" layoutY="264.0" prefHeight="25.0" prefWidth="147.0" promptText="CEP" />
+            <TextField fx:id="tfLogradouroEntrega" layoutX="580.0" layoutY="264.0" prefHeight="25.0" prefWidth="268.0" promptText="Rua" />
+            <TextField fx:id="tfUfEntrega" layoutX="854.0" layoutY="309.0" prefHeight="25.0" prefWidth="69.0" promptText="UF" />
+            <TextField fx:id="tfLocalidadeEntrega" layoutX="687.0" layoutY="309.0" prefHeight="25.0" prefWidth="153.0" promptText="Cidade" />
+            <TextField fx:id="tfBairroEntrega" layoutX="527.0" layoutY="309.0" prefHeight="25.0" prefWidth="153.0" promptText="Bairro" />
+            <TextField fx:id="tfComplementoEntrega" layoutX="421.0" layoutY="309.0" prefHeight="25.0" prefWidth="95.0" promptText="Complemento" />
+            <Button fx:id="btnFazerPedido" onAction="#fazerPedido" layoutX="767.0" layoutY="379.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Fazer pedido" textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
@@ -80,6 +80,8 @@
                   <Font name="Tahoma" size="18.0" />
                </font>
             </Label>
+            <TextField fx:id="tfNumeroRetirada" layoutX="854.0" layoutY="128.0" prefHeight="25.0" prefWidth="69.0" promptText="Número" />
+            <TextField fx:id="tfNumeroEntrega" layoutX="854.0" layoutY="264.0" prefHeight="25.0" prefWidth="69.0" promptText="Número" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="62.0" fitWidth="54.0" layoutX="262.0" layoutY="8.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
