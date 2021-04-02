@@ -1,7 +1,6 @@
 package br.com.ontimedelivery.dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.ontimedelivery.model.Usuario;
@@ -21,19 +20,13 @@ public class UsuarioDAO {
 		
 	}
 	
-	public boolean usuarioCadastrado(Usuario usuario) {
+	public Usuario buscarUsuario(Usuario usuario) {
 		
-		TypedQuery<Usuario> query = entityManager.createNamedQuery("usuarioCadastrado", Usuario.class);
+		TypedQuery<Usuario> query = entityManager.createNamedQuery("buscarUsuario", Usuario.class);
 		query.setParameter("email", usuario.getEmail());
 		query.setParameter("senha", usuario.getSenha());
 		
-		try {
-			query.getSingleResult();
-			return true;
-		}
-		catch (NoResultException e) {
-			return false;
-		}
+		return query.getSingleResult();
 
 	}
 }
