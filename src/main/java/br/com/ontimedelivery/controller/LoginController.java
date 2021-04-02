@@ -1,15 +1,16 @@
 package br.com.ontimedelivery.controller;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 
+import br.com.ontimedelivery.Main;
 import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.UsuarioDAO;
 import br.com.ontimedelivery.model.Usuario;
+import br.com.ontimedelivery.validacao.ValidarCampos;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,61 +35,48 @@ public class LoginController implements Initializable {
 	}
 
 	@FXML
-	private void login(ActionEvent event) {
+	private void login(ActionEvent event) {	
 
-		Usuario usuario;
-
-		usuario = new Usuario();
-		usuario.setEmail(tfEmail.getText());
-		usuario.setSenha(tfSenha.getText());
-
-		boolean dadosValidos = validarDados(usuario);
+		boolean dadosValidos = validarDados();
 
 		if(dadosValidos) {
+			
+			Usuario usuario = new Usuario();
+			usuario.setEmail(tfEmail.getText());
+			usuario.setSenha(tfSenha.getText());
+			
 			login(usuario);
 		}
-
+		
 	}
 
-	private boolean validarDados(Usuario usuario) {
+	private boolean validarDados() {
 
-		boolean senhaContemEspaco = usuario.getSenha().contains(" ");
+		ValidarCampos validarCampos = new ValidarCampos();
+		boolean camposPreenchidos, emailValido = false;
+		
+		camposPreenchidos = validarCampos.procurarTextFieldVazio(Arrays.asList(tfEmail, tfSenha));
 
-		if(emailInvalido(usuario.getEmail())) {
-			System.out.println("E-mail inválido");
-
-			return false;
+		if(camposPreenchidos) {
+			emailValido = validarCampos.validarEmail(tfEmail);		
 		}
-
-		if (senhaContemEspaco) {
-			System.out.println("Senha têm espaços em branco");
-			return false;
-		}
-
-		return true;
-
-	}
-	
-	private boolean emailInvalido(String email) {
-		 String expressao = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,3}$";
-         Pattern pattern = Pattern.compile(expressao, Pattern.CASE_INSENSITIVE);
-         Matcher matcher = pattern.matcher(email);
-         
-         return !matcher.matches();
-         
+		
+		return emailValido && camposPreenchidos;
 	}
 
 	private void login(Usuario usuario) {
 		UsuarioDAO usuarioDAO;
-
+		ValidarCampos validarCampos = new ValidarCampos();
+		
 		usuarioDAO = new UsuarioDAO(entityManager);
 
 		boolean existeUsuario = usuarioDAO.usuarioCadastrado(usuario);
 
 		if (existeUsuario) {
-			System.out.println("Usuario existe");
+			validarCampos.validarCamposDoUsuario(tfEmail, tfSenha);
+			Main.trocarScene("Pedido");
 		} else {
-			System.out.println("Usuario não existe");
+			validarCampos.invalidarCamposDosUsuario(tfEmail, tfSenha);
 		}
 	}
 
