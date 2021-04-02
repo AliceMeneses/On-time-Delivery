@@ -19,12 +19,12 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String enderecoEntrega;
-	private String enderecoRetirada;
 	private BigDecimal taxaFrete;
 	private LocalDateTime dataPedido;
 	private LocalDate dataEntrega;
-	
+	private Boolean servicoDeCargaEDescarga;
+	private String descricao;
+
 	@Enumerated(value = EnumType.STRING)
 	private PesoPedido peso;
 	
@@ -32,12 +32,18 @@ public class Pedido {
 	private TipoVeiculo tipoVeiculo;
 	
 	@ManyToOne
-	private Endereco endereco;
+	private Usuario usuario;
 	
 	@ManyToOne
-	private Usuario usuario;
+	private Endereco enderecoEntrega;
+	
+	@ManyToOne
+	private Endereco enderecoRetirada;
+	
+	public Pedido() {
+	}
 
-	public Pedido(String enderecoEntrega, String enderecoRetirada, BigDecimal taxaFrete, LocalDateTime dataPedido,
+	public Pedido(Endereco enderecoEntrega, Endereco enderecoRetirada, BigDecimal taxaFrete, LocalDateTime dataPedido,
 			LocalDate dataEntrega, PesoPedido peso, TipoVeiculo tipoVeiculo) {
 		this.enderecoEntrega = enderecoEntrega;
 		this.enderecoRetirada = enderecoRetirada;
@@ -52,11 +58,11 @@ public class Pedido {
 		return id;
 	}
 
-	public String getEnderecoEntrega() {
+	public Endereco getEnderecoEntrega() {
 		return enderecoEntrega;
 	}
 
-	public String getEnderecoRetirada() {
+	public Endereco getEnderecoRetirada() {
 		return enderecoRetirada;
 	}
 
@@ -78,6 +84,14 @@ public class Pedido {
 
 	public TipoVeiculo getTipoVeiculo() {
 		return tipoVeiculo;
+	}
+	
+	public Boolean getServicoDeCargaEDescarga() {
+		return servicoDeCargaEDescarga;
+	}
+
+	public String getDescricao() {
+		return descricao;
 	}
 
 
