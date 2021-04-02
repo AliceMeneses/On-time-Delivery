@@ -7,47 +7,48 @@ package br.com.ontimedelivery.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+
+import javax.persistence.EntityManager;
+
+import br.com.ontimedelivery.dao.ConexaoBanco;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
-
-/**
- * FXML Controller class
- *
- * @author dell
- */
 public class SignUpController implements Initializable {
     
      @FXML
-    private PasswordField inputSingUpNome;
+    private TextField tfSingUpNome;
 
     @FXML
     private Button btnSingUp;
 
     @FXML
-    private PasswordField inputSingUpEmail;
+    private TextField tfSingUpEmail;
 
     @FXML
-    private PasswordField inputSingUpTel;
+    private TextField tfSingUpTel;
 
     @FXML
-    private PasswordField inputSingUpSenha;
+    private PasswordField pfSingUpSenha;
 
     @FXML
-    private PasswordField inputSingUpReSenha;
+    private PasswordField pfSingUpReSenha;
 
     @FXML
     private Button btnLoginRote;
+    
+    private EntityManager entityManager;
 
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    	entityManager = ConexaoBanco.getEntityManager();
+    } 
+    
+    
+    
+    
     
 }
