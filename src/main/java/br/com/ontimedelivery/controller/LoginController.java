@@ -35,6 +35,11 @@ public class LoginController implements Initializable {
 		entityManager = ConexaoBanco.getEntityManager();
 
 	}
+	
+	@FXML
+	private void cadastrar(ActionEvent event) {
+		Main.mudarParaSignUpScene();
+	}
 
 	@FXML
 	private void login(ActionEvent event) {	
