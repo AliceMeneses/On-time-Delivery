@@ -43,8 +43,8 @@ public class Pedido {
 	public Pedido() {
 	}
 
-	public Pedido(Endereco enderecoEntrega, Endereco enderecoRetirada, BigDecimal taxaFrete, LocalDateTime dataPedido,
-			LocalDate dataEntrega, PesoPedido peso, TipoVeiculo tipoVeiculo) {
+	public Pedido(Usuario usuario, Endereco enderecoEntrega, Endereco enderecoRetirada, BigDecimal taxaFrete, LocalDateTime dataPedido,
+			LocalDate dataEntrega, PesoPedido peso, TipoVeiculo tipoVeiculo, String descricao, Boolean servicoDeCargaEDescarga) {
 		this.enderecoEntrega = enderecoEntrega;
 		this.enderecoRetirada = enderecoRetirada;
 		this.taxaFrete = taxaFrete;
@@ -52,6 +52,9 @@ public class Pedido {
 		this.dataEntrega = dataEntrega;
 		this.peso = peso;
 		this.tipoVeiculo = tipoVeiculo;
+		this.descricao = descricao;
+		this.servicoDeCargaEDescarga = servicoDeCargaEDescarga;
+		this.usuario = usuario;
 	}
 
 	public Long getId() {
