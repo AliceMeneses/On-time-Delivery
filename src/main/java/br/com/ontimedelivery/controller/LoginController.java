@@ -37,7 +37,7 @@ public class LoginController implements Initializable {
 	}
 	
 	@FXML
-	private void cadastrar(ActionEvent event) {
+	private void signUp(ActionEvent event) {
 		Main.mudarParaSignUpScene();
 	}
 
