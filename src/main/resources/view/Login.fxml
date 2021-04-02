@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ontimedelivery.controller.LoginController">
    <children>
       <AnchorPane layoutY="61.0" prefHeight="301.0" prefWidth="600.0" style="-fx-background-color: #6aac5c;" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
          <children>
@@ -19,7 +19,7 @@
                </font>
             </Label>
             <PasswordField fx:id="tfSenha" layoutX="167.0" layoutY="134.0" prefHeight="34.0" prefWidth="266.0" promptText="Senha" />
-            <Button fx:id="btnLogin" layoutX="167.0" layoutY="189.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="266.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Enviar" textFill="WHITE">
+            <Button fx:id="btnLogin" onAction="#login" layoutX="167.0" layoutY="189.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="266.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Enviar" textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
