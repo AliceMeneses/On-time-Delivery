@@ -17,8 +17,6 @@ public class Endereco {
 	private String numero;
 	private String complemento;
 	private String bairro;
-	
-	@Column(columnDefinition = "char", length = 2)
 	private String uf;
 	
 	@Column(length = 9)
