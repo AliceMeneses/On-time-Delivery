@@ -21,7 +21,7 @@ public class ConexaoBanco {
 	
 	public static void desconectar() {
 		
-		if(entityManager == null) {
+		if(entityManager != null) {
 			entityManager.close();
 		}
 		
