@@ -18,7 +18,7 @@
                   <Font name="Tahoma" size="36.0" />
                </font>
             </Label>
-            <Button fx:id="btnSingUp" layoutX="160.0" layoutY="237.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="266.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Cadastrar" textFill="WHITE">
+            <Button fx:id="btnSingUp" layoutX="160.0" layoutY="237.0" mnemonicParsing="false" onAction="#signUp" prefHeight="35.0" prefWidth="266.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Cadastrar" textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
@@ -40,7 +40,7 @@
             <Font name="Tahoma" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnLoginRote" layoutX="507.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #f5f0ea; -fx-border-color: #000000; -fx-border-radius: 4;" text="Entrar">
+      <Button fx:id="btnLoginRote" onAction="#voltarParaLogin" layoutX="507.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="71.0" style="-fx-background-color: #f5f0ea; -fx-border-color: #000000; -fx-border-radius: 4;" text="Entrar">
          <font>
             <Font name="Tahoma" size="12.0" />
          </font>
