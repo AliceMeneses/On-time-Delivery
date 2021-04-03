@@ -17,7 +17,5 @@ public class PedidoDAO {
 		entityManager.getTransaction().begin();
 		entityManager.persist(pedido);
 		entityManager.getTransaction().commit();
-		
-		entityManager.close();
 	}
 }
