@@ -26,14 +26,13 @@ public class LoginController implements Initializable {
 	private Button btnLogin;
     @FXML
     private Button btnSingUpRote;
+    
+    private EntityManager entityManager;
         
-	private EntityManager entityManager;
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		entityManager = ConexaoBanco.getEntityManager();
-
 	}
 	
 	@FXML
@@ -47,7 +46,7 @@ public class LoginController implements Initializable {
 		boolean dadosValidos = validarDados();
 
 		if(dadosValidos) {
-			
+
 			Usuario usuario = new Usuario();
 			usuario.setEmail(tfEmail.getText());
 			usuario.setSenha(tfSenha.getText());
