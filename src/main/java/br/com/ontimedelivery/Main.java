@@ -15,13 +15,14 @@ public class Main extends Application{
 	private static Scene loginScene;
 	private static Scene pedidoScene;
 	private static Scene signUpScene;
+	private static Scene sucessoPedidoScene;
 	
 	private static Stage stage;
 	
 	@Override
 	public void start(Stage primariaStage) throws IOException {
 		stage = primariaStage;
-		
+
 		stage.setOnCloseRequest(event -> ConexaoBanco.desconectar());
 		
 		Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));               
@@ -33,14 +34,19 @@ public class Main extends Application{
         Parent fxmlPedido = FXMLLoader.load(getClass().getResource("/view/Pedido.fxml"));       
         pedidoScene = new Scene(fxmlPedido);
         
+        Parent fxmlSucessoPedido = FXMLLoader.load(getClass().getResource("/view/SucessoPedido.fxml"));       
+        sucessoPedidoScene = new Scene(fxmlSucessoPedido);
+        
         stage.setScene(loginScene);
         stage.show();
 		
 	}
 	
 	public static void mudarParaPedidoScene(Usuario usuario) {
-
-		pedidoScene.setUserData(usuario);
+		if(usuario != null) {
+			pedidoScene.setUserData(usuario);
+			System.out.println("Entrou");
+		}
 		stage.setScene(pedidoScene);		
 	}
 	
@@ -50,6 +56,11 @@ public class Main extends Application{
 	
 	public static void mudarParaSignUpScene() {
 		stage.setScene(signUpScene);
+	}
+	
+	public static void mudarParaSucessoPedidoScene() {
+		
+		stage.setScene(sucessoPedidoScene);
 	}
 	
 	public static void main(String[] args) {
