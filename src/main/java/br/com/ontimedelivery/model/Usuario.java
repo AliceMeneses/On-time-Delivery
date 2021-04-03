@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
 @NamedQuery(name="buscarUsuario", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
+@NamedQuery(name="buscarUsuarioPeloEmail", query="SELECT u FROM Usuario u WHERE u.email = :email")
 
 @Entity
 public class Usuario {
@@ -18,7 +19,7 @@ public class Usuario {
 	
 	private String nome;
 	
-	@Column(length = 9)
+	@Column(length = 15)
 	private String telefone;
 	
 	private String email;	
