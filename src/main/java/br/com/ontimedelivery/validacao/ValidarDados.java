@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javafx.scene.Node;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -72,33 +73,72 @@ public class ValidarDados {
 		}
 	}
 
-	public Boolean validarCEP(String cep) {
+	public Boolean validarCEP(TextField tfCep) {
+
+		String cep = tfCep.getText().trim();
+		Tooltip tooltip = new Tooltip();
 
 		if (cep.length() == 8) {
 
+			
 			try {
-				System.out.println("cheguei");
-				Integer.parseInt(cep);
-				return true;
-			} catch (Exception e) {
 
+				Integer.parseInt(cep);
+				
+				removerCorDaBordaETooltip(tfCep, tooltip);
+				
+				return true;
+			} catch (NumberFormatException e) {
+				
+				tooltip.setText("CEP inválido");
+				adicionarCorDaBordaETooltip(tfCep, tooltip);
 				return false;
 			}
+		} else {
+			
+			tooltip.setText("CEP inválido");
+			adicionarCorDaBordaETooltip(tfCep, tooltip);
+			return false;
 		}
 
-		return false;
 	}
 
-	public Boolean validarNumero(String numero) {
+	public Boolean validarNumero(TextField tfnumero) {
+
+		Tooltip tooltip = new Tooltip();
 
 		try {
 
-			Integer.parseInt(numero);
+			Integer.parseInt(tfnumero.getText());
+			
+			removerCorDaBordaETooltip(tfnumero, tooltip);
 			return true;
-		} catch (Exception e) {
-
+		} catch (NumberFormatException e) {
+			
+			tooltip.setText("Número inválido");
+			adicionarCorDaBordaETooltip(tfnumero, tooltip);
 			return false;
 		}
+	}
+
+	public Boolean validarTelefone(TextField tfTelefone) {
+		String telefone = tfTelefone.getText();
+
+		String expressao = "^\\([0-9]{2}\\) [0-9]{4,5}-[0-9]{4}$";
+		Pattern pattern = Pattern.compile(expressao);
+		Matcher matcher = pattern.matcher(telefone);
+
+		Boolean telefoneValido = matcher.matches();
+
+		if (telefoneValido) {
+
+			removerCorDaBordaETooltip(tfTelefone, new Tooltip());
+		} else {
+
+			adicionarCorDaBordaETooltip(tfTelefone, new Tooltip("Telefone inválido"));
+		}
+
+		return telefoneValido;
 	}
 
 	public Boolean validarEmail(TextField tfEmail) {
@@ -132,5 +172,44 @@ public class ValidarDados {
 		removerCorDaBordaETooltip(textFieldEmail, new Tooltip());
 		removerCorDaBordaETooltip(textFieldSenha, new Tooltip());
 
+	}
+
+	public void validarCadastroDoUsuario(List<TextField> textFields) {
+
+		for (TextField textField : textFields) {
+			
+			removerCorDaBordaETooltip(textField, new Tooltip());
+		}
+	}
+
+	public void invalidarCadastroDoUsuario(List<TextField> textFields) {
+		for (TextField textField : textFields) {
+
+			Tooltip tooltip = new Tooltip("Usuário já existe");
+
+			adicionarCorDaBordaETooltip(textField, tooltip);
+		}
+	}
+
+	public Boolean validarSenhaDeCadastro(PasswordField psSenha, PasswordField psSenhaRepetida) {
+		
+		String senha = psSenha.getText();
+		String senhaRepetida = psSenhaRepetida.getText();
+		Tooltip tooltip = new Tooltip();
+
+		if(senha.equals(senhaRepetida)) {
+
+			removerCorDaBordaETooltip(psSenha, tooltip);
+			removerCorDaBordaETooltip(psSenhaRepetida, tooltip);		
+			
+			return true;			
+		} else {
+			
+			tooltip.setText("Senhas não coincidem");
+			adicionarCorDaBordaETooltip(psSenha, tooltip);
+			adicionarCorDaBordaETooltip(psSenhaRepetida, tooltip);
+
+			return false;
+		}
 	}
 }
