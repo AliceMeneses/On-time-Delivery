@@ -11,7 +11,7 @@
    <children>
       <AnchorPane layoutY="61.0" prefHeight="301.0" prefWidth="600.0" style="-fx-background-color: #6aac5c;" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
          <children>
-            <Button fx:id="btnPedidoRoute" layoutX="156.0" layoutY="220.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="266.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Fazer novo pedido" textFill="WHITE">
+            <Button fx:id="btnPedidoRoute" onAction="#fazerNovoPedido" layoutX="156.0" layoutY="220.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="266.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Fazer novo pedido" textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>

@@ -7,26 +7,27 @@ package br.com.ontimedelivery.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+
+import br.com.ontimedelivery.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
-/**
- * FXML Controller class
- *
- * @author dell
- */
 public class SucessoPedidoController implements Initializable {
 
     @FXML
     private Button btnPedidoRoute;
 
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
     
+    @FXML
+	public void fazerNovoPedido(ActionEvent event) {
+    	
+    	Main.mudarParaPedidoScene(null);
+    }
 }
