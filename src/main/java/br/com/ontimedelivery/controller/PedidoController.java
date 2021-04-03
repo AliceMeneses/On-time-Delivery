@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 
+import br.com.ontimedelivery.Main;
 import br.com.ontimedelivery.buscardordeendereco.BuscaEndereco;
 import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.EnderecoDAO;
@@ -31,8 +32,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
 public class PedidoController implements Initializable {
-
-	private EntityManager entityManager;
 
 	@FXML
 	private TextField tfCepRetirada;
@@ -97,11 +96,18 @@ public class PedidoController implements Initializable {
     @FXML
     private Button btnFazerPedido;
     
+    @FXML
+    private Button btnSair;
+    
+    private Usuario usuario;
+    
+    private EntityManager entityManager;
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		
 		entityManager = ConexaoBanco.getEntityManager();
-			
+		
 		tfCepEntrega.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 			
 			Boolean textFieldsEnderecoEntregaVazios = tfLogradouroEntrega.getText().isEmpty() && tfBairroEntrega.getText().isEmpty()
@@ -155,6 +161,10 @@ public class PedidoController implements Initializable {
 		tfUfRetirada.setText(enderecoRetirada.getUF());
 	}
 	
+	@FXML
+	public void sair(ActionEvent event) {
+		Main.mudarParaLoginScene();
+	}
 	
 	@FXML
 	public void fazerPedido(ActionEvent event) {
@@ -162,6 +172,8 @@ public class PedidoController implements Initializable {
 		Boolean dadosValidos = validarDados();
 		
 		if(dadosValidos) {
+			
+			
 			PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
 			EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
 			Pedido pedido = criaPedido();
@@ -170,13 +182,15 @@ public class PedidoController implements Initializable {
 			enderecoDAO.inserir(pedido.getEnderecoRetirada());
 						
 			pedidoDAO.inserir(pedido);
+			
+			Main.mudarParaSucessoPedidoScene();
 		}
 
 	}
 
 	public Pedido criaPedido() {
 		
-		Usuario usuario = (Usuario) btnFazerPedido.getScene().getUserData();
+		usuario = (Usuario) btnFazerPedido.getScene().getUserData();
 
 		TipoVeiculo tipoVeiculo;
 		PesoPedido pesoPedido;
@@ -249,16 +263,18 @@ public class PedidoController implements Initializable {
 		
 		if(camposPreenchidos) {
 			
-			cepEntregaValido = validarDados.validarCEP(tfCepEntrega.getText().trim());
-			cepRetiradaValido = validarDados.validarCEP(tfCepRetirada.getText().trim());
+			cepEntregaValido = validarDados.validarCEP(tfCepEntrega);
+			cepRetiradaValido = validarDados.validarCEP(tfCepRetirada);
 			
-			numeroEntregaValido = validarDados.validarNumero(tfNumeroEntrega.getText());
-			numeroRetiradaValido = validarDados.validarNumero(tfNumeroRetirada.getText());
+			numeroEntregaValido = validarDados.validarNumero(tfNumeroEntrega);
+			numeroRetiradaValido = validarDados.validarNumero(tfNumeroRetirada);
 		}
 		
 		Boolean CEPsValidos = cepEntregaValido && cepRetiradaValido;
+		
 		Boolean numerosValidos =  numeroEntregaValido && numeroRetiradaValido;
 
 		return camposPreenchidos && CEPsValidos && numerosValidos;
 	}
+
 }

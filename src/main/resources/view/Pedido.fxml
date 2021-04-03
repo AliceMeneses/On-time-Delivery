@@ -70,7 +70,7 @@
             <TextField fx:id="tfLocalidadeEntrega" layoutX="687.0" layoutY="309.0" prefHeight="25.0" prefWidth="153.0" promptText="Cidade" />
             <TextField fx:id="tfBairroEntrega" layoutX="527.0" layoutY="309.0" prefHeight="25.0" prefWidth="153.0" promptText="Bairro" />
             <TextField fx:id="tfComplementoEntrega" layoutX="421.0" layoutY="309.0" prefHeight="25.0" prefWidth="95.0" promptText="Complemento" />
-            <Button fx:id="btnFazerPedido" onAction="#fazerPedido" layoutX="767.0" layoutY="379.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Fazer pedido" textFill="WHITE">
+            <Button fx:id="btnFazerPedido" layoutX="767.0" layoutY="379.0" mnemonicParsing="false" onAction="#fazerPedido" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Fazer pedido" textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
@@ -94,5 +94,10 @@
             <Font name="Tahoma" size="36.0" />
          </font>
       </Label>
+		    <Button fx:id="btnSair" layoutX="746.0" layoutY="18.0" mnemonicParsing="false" onAction="#sair" prefHeight="34.0" prefWidth="133.0" style="-fx-background-color: #f5f0ea; -fx-border-color: #000000; -fx-border-radius: 4;" text="Sair">
+		        <font>
+		           <Font name="Tahoma" size="12.0" />
+		        </font>
+		    </Button>
    </children>
 </AnchorPane>
