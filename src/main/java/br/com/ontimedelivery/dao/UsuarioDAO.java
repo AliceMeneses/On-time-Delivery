@@ -23,13 +23,13 @@ public class UsuarioDAO {
 	
 	public Usuario buscarUsuario(Usuario usuario) {
 		
-		TypedQuery<Usuario> query = entityManager.createNamedQuery("buscarUsuario", Usuario.class);
-		query.setParameter("email", usuario.getEmail());
-		query.setParameter("senha", usuario.getSenha());
+		TypedQuery<Usuario> query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha", Usuario.class)
+			.setParameter("email", usuario.getEmail())
+			.setParameter("senha", usuario.getSenha());
 		
 		try {
-			usuario = query.getSingleResult();
-			return usuario;
+			 
+			return query.getSingleResult();
 		}
 		catch(NoResultException  e) {
 			return null;
@@ -38,8 +38,8 @@ public class UsuarioDAO {
 	}
 	
 	public Boolean buscarUsuarioCadastrado(Usuario usuario) {
-		TypedQuery<Usuario> query = entityManager.createNamedQuery("buscarUsuarioPeloEmail", Usuario.class);
-		query.setParameter("email", usuario.getEmail());
+		TypedQuery<Usuario> query = entityManager.createNamedQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
+				.setParameter("email", usuario.getEmail());
 
 		try {
 			query.getSingleResult();
