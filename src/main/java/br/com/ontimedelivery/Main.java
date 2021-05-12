@@ -45,7 +45,6 @@ public class Main extends Application{
 	public static void mudarParaPedidoScene(Usuario usuario) {
 		if(usuario != null) {
 			pedidoScene.setUserData(usuario);
-			System.out.println("Entrou");
 		}
 		stage.setScene(pedidoScene);		
 	}
