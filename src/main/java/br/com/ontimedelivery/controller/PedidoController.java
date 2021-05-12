@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import javax.persistence.EntityManager;
 
 import br.com.ontimedelivery.Main;
-import br.com.ontimedelivery.buscardordeendereco.BuscaEndereco;
+import br.com.ontimedelivery.api.BuscaEndereco;
 import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.EnderecoDAO;
 import br.com.ontimedelivery.dao.PedidoDAO;

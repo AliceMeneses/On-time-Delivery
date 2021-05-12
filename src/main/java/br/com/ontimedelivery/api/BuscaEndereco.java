@@ -1,4 +1,4 @@
-package br.com.ontimedelivery.buscardordeendereco;
+package br.com.ontimedelivery.api;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
