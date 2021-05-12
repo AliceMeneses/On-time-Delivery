@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class ConexaoBanco {
+	
+	public static final EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("ontimedelivery");
 
 	public static EntityManager entityManager = null;
 	
@@ -12,11 +14,8 @@ public class ConexaoBanco {
 		if(entityManager != null) {
 			return entityManager;
 		}
-		
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ontimedelivery");
-		entityManager = entityManagerFactory.createEntityManager();
-		
-		return entityManager;
+				
+		return FACTORY.createEntityManager();
 	}
 	
 	public static void desconectar() {
