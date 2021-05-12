@@ -19,16 +19,16 @@ public class BuscaEndereco {
 		try {
 	        URL url = new URL(urlParaChamada);
 	        HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
-	
-	        if (conexao.getResponseCode() != 200) {
-	            System.out.println("Tente novamente mais tarde");
-	        }
 	        
-			InputStream in = new BufferedInputStream(conexao.getInputStream());
+			if (conexao.getResponseCode() == 200) {
+				
+				InputStream in = new BufferedInputStream(conexao.getInputStream());
 
-			Endereco endereco = JSON.std.beanFrom(Endereco.class, in);
-
-	        return endereco;
+				Endereco endereco = JSON.std.beanFrom(Endereco.class, in);
+				return endereco;
+			}
+			
+	        return null;
 		} catch (IOException ex) {
 			return null;
 
