@@ -1,8 +1,6 @@
 package br.com.ontimedelivery.controller;
 
-import java.net.URL;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 
@@ -13,12 +11,11 @@ import br.com.ontimedelivery.model.Usuario;
 import br.com.ontimedelivery.validacao.ValidarDados;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class SignUpController implements Initializable {
+public class SignUpController {
 
 	@FXML
 	private TextField tfSingUpNome;
@@ -40,14 +37,6 @@ public class SignUpController implements Initializable {
 
 	@FXML
 	private Button btnLoginRote;
-	
-	private EntityManager entityManager;
-
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {
-		
-		entityManager = ConexaoBanco.getEntityManager();
-	}
 
 	@FXML
 	public void signUp(ActionEvent event) {
@@ -55,6 +44,9 @@ public class SignUpController implements Initializable {
 		Boolean dadosValidos = validarDados();
 
 		if (dadosValidos) {
+			
+			EntityManager entityManager = ConexaoBanco.getEntityManager();
+			
 			UsuarioDAO usuarioDAO = new UsuarioDAO(entityManager);
 
 			Usuario usuario = new Usuario(tfSingUpNome.getText(), tfSingUpTel.getText(), tfSingUpEmail.getText(),
@@ -65,8 +57,12 @@ public class SignUpController implements Initializable {
 			Boolean usuarioNaoExiste = !(usuarioDAO.buscarUsuarioCadastrado(usuario));
 
 			if (usuarioNaoExiste) {
-
+				
+				entityManager.getTransaction().begin();
+				
 				usuarioDAO.inserir(usuario);
+				
+				entityManager.getTransaction().commit();
 
 				validarDados.validarCadastroDoUsuario(
 						Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha));
@@ -77,6 +73,9 @@ public class SignUpController implements Initializable {
 				validarDados.invalidarCadastroDoUsuario(
 						Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha));
 			}
+
+			entityManager.close();
+
 		}
 
 	}

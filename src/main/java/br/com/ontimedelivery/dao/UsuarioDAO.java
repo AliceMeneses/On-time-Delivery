@@ -10,15 +10,13 @@ public class UsuarioDAO {
 	private EntityManager entityManager;
 
 	public UsuarioDAO(EntityManager entityManager) {
+		
 		this.entityManager = entityManager;
 	}
 	
 	public void inserir(Usuario usuario) {
 		
-		entityManager.getTransaction().begin();
-		entityManager.persist(usuario);
-		entityManager.getTransaction().commit();
-		
+		entityManager.persist(usuario);		
 	}
 	
 	public Usuario buscarUsuario(Usuario usuario) {
@@ -33,12 +31,12 @@ public class UsuarioDAO {
 		}
 		catch(NoResultException  e) {
 			return null;
-		}
-		
+		}		
 	}
 	
 	public Boolean buscarUsuarioCadastrado(Usuario usuario) {
-		TypedQuery<Usuario> query = entityManager.createNamedQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
+		
+		TypedQuery<Usuario> query = entityManager.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class)
 				.setParameter("email", usuario.getEmail());
 
 		try {

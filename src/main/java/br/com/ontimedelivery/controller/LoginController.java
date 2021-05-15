@@ -1,8 +1,6 @@
 package br.com.ontimedelivery.controller;
 
-import java.net.URL;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 
@@ -13,11 +11,10 @@ import br.com.ontimedelivery.model.Usuario;
 import br.com.ontimedelivery.validacao.ValidarDados;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class LoginController implements Initializable {
+public class LoginController {
 	@FXML
 	private TextField tfEmail;
 	@FXML
@@ -28,12 +25,6 @@ public class LoginController implements Initializable {
     private Button btnSingUpRote;
     
     private EntityManager entityManager;
-        
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		entityManager = ConexaoBanco.getEntityManager();
-	}
 	
 	@FXML
 	private void signUp(ActionEvent event) {
@@ -52,6 +43,8 @@ public class LoginController implements Initializable {
 			usuario.setSenha(tfSenha.getText());
 			
 			UsuarioDAO usuarioDAO;
+			entityManager = ConexaoBanco.getEntityManager();
+			
 			ValidarDados validarDados = new ValidarDados();
 			
 			usuarioDAO = new UsuarioDAO(entityManager);
@@ -65,6 +58,8 @@ public class LoginController implements Initializable {
 				validarDados.invalidarTextFieldsDosUsuario(tfEmail, tfSenha);
 			}
 		}
+		
+		entityManager.close();
 		
 	}
 

@@ -100,13 +100,11 @@ public class PedidoController implements Initializable {
     private Button btnSair;
     
     private Usuario usuario;
-    
-    private EntityManager entityManager;
-    
+        
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		entityManager = ConexaoBanco.getEntityManager();
+		EntityManager entityManager = ConexaoBanco.getEntityManager();
 		
 		tfCepEntrega.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 			
@@ -142,7 +140,7 @@ public class PedidoController implements Initializable {
 		    }
 		});
 		
-	
+		entityManager.close();
 	}
 	
 	public void setTextFieldsEnderecoEntrega(Endereco enderecoEntrega) {
@@ -173,15 +171,22 @@ public class PedidoController implements Initializable {
 		
 		if(dadosValidos) {
 			
+			EntityManager entityManager = ConexaoBanco.getEntityManager();
 			
 			PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
 			EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
 			Pedido pedido = criaPedido();
-
+			
+			entityManager.getTransaction().begin();
+			
 			enderecoDAO.inserir(pedido.getEnderecoEntrega());
 			enderecoDAO.inserir(pedido.getEnderecoRetirada());
 						
 			pedidoDAO.inserir(pedido);
+			
+			entityManager.getTransaction().commit();
+			
+			entityManager.close();
 			
 			Main.mudarParaSucessoPedidoScene();
 		}
