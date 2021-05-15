@@ -1,10 +1,10 @@
-package br.com.ontimedelivery.dao;
+package br.com.ontimedelivery.util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class ConexaoBanco {
+public class JPAUtil {
 	
 	public static final EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("ontimedelivery");
 

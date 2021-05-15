@@ -12,7 +12,6 @@ import javax.persistence.EntityManager;
 
 import br.com.ontimedelivery.Main;
 import br.com.ontimedelivery.api.BuscaEndereco;
-import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.EnderecoDAO;
 import br.com.ontimedelivery.dao.PedidoDAO;
 import br.com.ontimedelivery.model.Endereco;
@@ -20,6 +19,7 @@ import br.com.ontimedelivery.model.Pedido;
 import br.com.ontimedelivery.model.PesoPedido;
 import br.com.ontimedelivery.model.TipoVeiculo;
 import br.com.ontimedelivery.model.Usuario;
+import br.com.ontimedelivery.util.JPAUtil;
 import br.com.ontimedelivery.validacao.ValidarDados;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -104,7 +104,7 @@ public class PedidoController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		EntityManager entityManager = ConexaoBanco.getEntityManager();
+		EntityManager entityManager = JPAUtil.getEntityManager();
 		
 		tfCepEntrega.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 			
@@ -171,7 +171,7 @@ public class PedidoController implements Initializable {
 		
 		if(dadosValidos) {
 			
-			EntityManager entityManager = ConexaoBanco.getEntityManager();
+			EntityManager entityManager = JPAUtil.getEntityManager();
 			
 			PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
 			EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);

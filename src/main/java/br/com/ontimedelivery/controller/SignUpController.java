@@ -5,9 +5,9 @@ import java.util.Arrays;
 import javax.persistence.EntityManager;
 
 import br.com.ontimedelivery.Main;
-import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.dao.UsuarioDAO;
 import br.com.ontimedelivery.model.Usuario;
+import br.com.ontimedelivery.util.JPAUtil;
 import br.com.ontimedelivery.validacao.ValidarDados;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +45,7 @@ public class SignUpController {
 
 		if (dadosValidos) {
 			
-			EntityManager entityManager = ConexaoBanco.getEntityManager();
+			EntityManager entityManager = JPAUtil.getEntityManager();
 			
 			UsuarioDAO usuarioDAO = new UsuarioDAO(entityManager);
 
