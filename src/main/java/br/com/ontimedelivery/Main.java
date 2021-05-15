@@ -2,7 +2,6 @@ package br.com.ontimedelivery;
 
 import java.io.IOException;
 
-import br.com.ontimedelivery.dao.ConexaoBanco;
 import br.com.ontimedelivery.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +21,6 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primariaStage) throws IOException {
 		stage = primariaStage;
-
-		stage.setOnCloseRequest(event -> ConexaoBanco.desconectar());
 		
 		Parent fxmlLogin = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));               
         loginScene = new Scene(fxmlLogin);
