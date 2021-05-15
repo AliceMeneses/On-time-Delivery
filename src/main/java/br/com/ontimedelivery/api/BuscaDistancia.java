@@ -14,31 +14,32 @@ import com.google.gson.JsonObject;
 
 public class BuscaDistancia {
 
-	public String medirDistancia(String enderecoOrigem, String enderecoDestino) {
+	public Double medirDistancia(String enderecoOrigem, String enderecoDestino) {
 
-		String urlDistanceMatrix = "https://maps.googleapis.com/maps/api/distancematrix/json?" 
-				+ "origins=" + enderecoOrigem
-				+ "&destinations=" + enderecoDestino
-				+ "&key=AIzaSyAXW4JQPiNoi0uuCCBebbC8peIGl8kXMTs";
+		String urlDistanceMatrix = "https://maps.googleapis.com/maps/api/distancematrix/json?" + "origins="
+				+ enderecoOrigem + "&destinations=" + enderecoDestino + "&key=AIzaSyAXW4JQPiNoi0uuCCBebbC8peIGl8kXMTs";
 
 		try {
 			URL url = new URL(urlDistanceMatrix);
 			HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
-			System.out.println(urlDistanceMatrix);
-			System.out.println(conexao.getResponseCode());
+			if (conexao.getResponseCode() == 200) {
+				InputStream in = new BufferedInputStream(conexao.getInputStream());
 
-			InputStream in = new BufferedInputStream(conexao.getInputStream());
+				String textoConvertido = IOUtils.toString(in, StandardCharsets.UTF_8.name());
+				JsonObject jsonObject = new Gson().fromJson(textoConvertido, JsonObject.class);
 
-			String textoConvertido = IOUtils.toString(in, StandardCharsets.UTF_8.name());
-			JsonObject jsonObject = new Gson().fromJson(textoConvertido, JsonObject.class);
-
-			String distancia = jsonObject.getAsJsonArray("rows").get(0).getAsJsonObject().getAsJsonArray("elements")
-					.get(0).getAsJsonObject().get("distance").getAsJsonObject().get("text").getAsString();
-
-			return distancia;
-		} catch (IOException ex) {
+				String distancia = jsonObject.getAsJsonArray("rows").get(0).getAsJsonObject().getAsJsonArray("elements")
+						.get(0).getAsJsonObject().get("distance").getAsJsonObject().get("text").getAsString();
+				
+				distancia = distancia.replace("km", "");
+				
+				return Double.valueOf(distancia);
+			}
 			
+			return null;
+		} catch (IOException ex) {
+
 			return null;
 		}
 
