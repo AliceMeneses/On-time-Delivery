@@ -1,11 +1,13 @@
 package br.com.ontimedelivery.validacao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javafx.scene.Node;
+import br.com.ontimedelivery.util.EstiloDaValidacao;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -13,24 +15,9 @@ import javafx.scene.control.Tooltip;
 
 public class ValidarDados {
 
-	public void adicionarCorDaBordaETooltip(Node node, Tooltip tooltip) {
 
-		node.setStyle("-fx-border-color: red;");
-		tooltip.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); "
-				+ "-fx-font-weight: bold;" + " -fx-padding: 5;" + " -fx-border-width:1; "
-				+ "-fx-background-color: #FBEFEF; " + "-fx-text-fill: #cc0033;" + " -fx-border-color:#cc0033;");
 
-		Tooltip.install(node, tooltip);
-	}
-
-	public void removerCorDaBordaETooltip(Node node, Tooltip tooltip) {
-
-		node.setStyle(null);
-		Tooltip.uninstall(node, tooltip);
-
-	}
-
-	public Boolean procurarTextFieldVazio(List<TextField> textFields) {
+	public static Boolean procurarTextFieldVazio(List<TextField> textFields) {
 
 		List<TextField> textFieldVazio = new ArrayList<>();
 
@@ -41,20 +28,22 @@ public class ValidarDados {
 			Boolean textFieldEstaVazio = textField.getText().trim().equals("");
 
 			if (textFieldEstaVazio) {
-				adicionarCorDaBordaETooltip(textField, tooltip);
+				
+				EstiloDaValidacao.adicionarCorDaBordaETooltip(textField, tooltip);
 				tooltip.setText("Campo obrigatório");
 
 				textFieldVazio.add(textField);
 			} else {
-				removerCorDaBordaETooltip(textField, tooltip);
+				
+				EstiloDaValidacao.removerCorDaBordaETooltip(textField, tooltip);
 			}
 
-		}
+		} 
 
-		return textFieldVazio.isEmpty();
+		return !textFieldVazio.isEmpty();
 	}
 
-	public Boolean procurarTextAreaVazio(TextArea textArea) {
+	public static Boolean procurarTextAreaVazio(TextArea textArea) {
 
 		Tooltip tooltip = new Tooltip();
 
@@ -62,48 +51,77 @@ public class ValidarDados {
 
 		if (textAreaEstaVazio) {
 
-			adicionarCorDaBordaETooltip(textArea, tooltip);
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(textArea, tooltip);
 			tooltip.setText("Campo obrigatório");
 
-			return false;
-		} else {
-			removerCorDaBordaETooltip(textArea, tooltip);
-
 			return true;
+		} else {
+			EstiloDaValidacao.removerCorDaBordaETooltip(textArea, tooltip);
+
+			return false;
 		}
 	}
+	
+	public static Boolean validarDataAgendadaEntrega(DatePicker datePicker) {
+		
+		Tooltip tooltip = new Tooltip();
+		
+		LocalDate dataAgendadaEntrega = datePicker.getValue();
+		
+		if(dataAgendadaEntrega == null) {
+			
+			tooltip.setText("Campo obrigatório");
+			
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(datePicker, tooltip);
+			
+			return false;			
+		}
+		
+		if(dataAgendadaEntrega.isBefore(LocalDate.now())) {
+			
+			tooltip.setText("Data inválida");
+			
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(datePicker, tooltip);
+			return false;
+		}
+		
+		EstiloDaValidacao.removerCorDaBordaETooltip(datePicker, tooltip);
+		
+		return true;
+	}
 
-	public Boolean validarCEP(TextField tfCep) {
+	public static Boolean validarCEP(TextField tfCep) {
 
 		String cep = tfCep.getText().trim();
 		Tooltip tooltip = new Tooltip();
 
 		if (cep.length() == 8) {
 
-			
 			try {
-
+				
 				Integer.parseInt(cep);
 				
-				removerCorDaBordaETooltip(tfCep, tooltip);
+				EstiloDaValidacao.removerCorDaBordaETooltip(tfCep, tooltip);
 				
 				return true;
 			} catch (NumberFormatException e) {
 				
 				tooltip.setText("CEP inválido");
-				adicionarCorDaBordaETooltip(tfCep, tooltip);
+				EstiloDaValidacao.adicionarCorDaBordaETooltip(tfCep, tooltip);
+				
 				return false;
 			}
 		} else {
 			
 			tooltip.setText("CEP inválido");
-			adicionarCorDaBordaETooltip(tfCep, tooltip);
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(tfCep, tooltip);
+			
 			return false;
 		}
 
 	}
 
-	public Boolean validarNumero(TextField tfnumero) {
+	public static Boolean validarNumero(TextField tfnumero) {
 
 		Tooltip tooltip = new Tooltip();
 
@@ -111,17 +129,19 @@ public class ValidarDados {
 
 			Integer.parseInt(tfnumero.getText());
 			
-			removerCorDaBordaETooltip(tfnumero, tooltip);
+			EstiloDaValidacao.removerCorDaBordaETooltip(tfnumero, tooltip);
+			
 			return true;
 		} catch (NumberFormatException e) {
 			
 			tooltip.setText("Número inválido");
-			adicionarCorDaBordaETooltip(tfnumero, tooltip);
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(tfnumero, tooltip);
+			
 			return false;
 		}
 	}
 
-	public Boolean validarTelefone(TextField tfTelefone) {
+	public static Boolean validarTelefone(TextField tfTelefone) {
 		String telefone = tfTelefone.getText();
 
 		String expressao = "^\\([0-9]{2}\\) [0-9]{4,5}-[0-9]{4}$";
@@ -132,16 +152,16 @@ public class ValidarDados {
 
 		if (telefoneValido) {
 
-			removerCorDaBordaETooltip(tfTelefone, new Tooltip());
+			EstiloDaValidacao.removerCorDaBordaETooltip(tfTelefone, new Tooltip());
 		} else {
 
-			adicionarCorDaBordaETooltip(tfTelefone, new Tooltip("Telefone inválido"));
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(tfTelefone, new Tooltip("Telefone inválido"));
 		}
 
 		return telefoneValido;
 	}
 
-	public Boolean validarEmail(TextField tfEmail) {
+	public static Boolean validarEmail(TextField tfEmail) {
 
 		String email = tfEmail.getText();
 		String expressao = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,3}$";
@@ -152,46 +172,45 @@ public class ValidarDados {
 
 		if (emailValido) {
 
-			removerCorDaBordaETooltip(tfEmail, new Tooltip());
+			EstiloDaValidacao.removerCorDaBordaETooltip(tfEmail, new Tooltip());
 		} else {
 
-			adicionarCorDaBordaETooltip(tfEmail, new Tooltip("E-mail inválido"));
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(tfEmail, new Tooltip("E-mail inválido"));
 		}
+		
 		return emailValido;
-
 	}
 
-	public void invalidarTextFieldsDosUsuario(TextField textFieldEmail, TextField textFieldSenha) {
+	public static void invalidarTextFieldsDosUsuario(TextField textFieldEmail, TextField textFieldSenha) {
 
-		adicionarCorDaBordaETooltip(textFieldEmail, new Tooltip("Usuário não existe"));
-		adicionarCorDaBordaETooltip(textFieldSenha, new Tooltip("Usuário não existe"));
+		EstiloDaValidacao.adicionarCorDaBordaETooltip(textFieldEmail, new Tooltip("Usuário não existe"));
+		EstiloDaValidacao.adicionarCorDaBordaETooltip(textFieldSenha, new Tooltip("Usuário não existe"));
 	}
 
-	public void validarTextFieldsDoUsuario(TextField textFieldEmail, TextField textFieldSenha) {
+	public static void validarTextFieldsDoUsuario(TextField textFieldEmail, TextField textFieldSenha) {
 
-		removerCorDaBordaETooltip(textFieldEmail, new Tooltip());
-		removerCorDaBordaETooltip(textFieldSenha, new Tooltip());
-
+		EstiloDaValidacao.removerCorDaBordaETooltip(textFieldEmail, new Tooltip());
+		EstiloDaValidacao.removerCorDaBordaETooltip(textFieldSenha, new Tooltip());
 	}
 
-	public void validarCadastroDoUsuario(List<TextField> textFields) {
+	public static void validarCadastroDoUsuario(List<TextField> textFields) {
 
 		for (TextField textField : textFields) {
 			
-			removerCorDaBordaETooltip(textField, new Tooltip());
+			EstiloDaValidacao.removerCorDaBordaETooltip(textField, new Tooltip());
 		}
 	}
 
-	public void invalidarCadastroDoUsuario(List<TextField> textFields) {
+	public static void invalidarCadastroDoUsuario(List<TextField> textFields) {
 		for (TextField textField : textFields) {
 
 			Tooltip tooltip = new Tooltip("Usuário já existe");
 
-			adicionarCorDaBordaETooltip(textField, tooltip);
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(textField, tooltip);
 		}
 	}
 
-	public Boolean validarSenhaDeCadastro(PasswordField psSenha, PasswordField psSenhaRepetida) {
+	public static Boolean validarSenhaDeCadastro(PasswordField psSenha, PasswordField psSenhaRepetida) {
 		
 		String senha = psSenha.getText();
 		String senhaRepetida = psSenhaRepetida.getText();
@@ -199,16 +218,16 @@ public class ValidarDados {
 
 		if(senha.equals(senhaRepetida)) {
 
-			removerCorDaBordaETooltip(psSenha, tooltip);
-			removerCorDaBordaETooltip(psSenhaRepetida, tooltip);		
+			EstiloDaValidacao.removerCorDaBordaETooltip(psSenha, tooltip);
+			EstiloDaValidacao.removerCorDaBordaETooltip(psSenhaRepetida, tooltip);	
 			
 			return true;			
 		} else {
 			
 			tooltip.setText("Senhas não coincidem");
-			adicionarCorDaBordaETooltip(psSenha, tooltip);
-			adicionarCorDaBordaETooltip(psSenhaRepetida, tooltip);
-
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(psSenha, tooltip);
+			EstiloDaValidacao.adicionarCorDaBordaETooltip(psSenhaRepetida, tooltip);
+			
 			return false;
 		}
 	}
