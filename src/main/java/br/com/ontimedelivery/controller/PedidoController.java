@@ -2,9 +2,7 @@ package br.com.ontimedelivery.controller;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -27,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -103,6 +102,9 @@ public class PedidoController implements Initializable {
 	
 	@FXML
 	private Label lbFrete;
+	
+	@FXML
+	private DatePicker dtAgendarEntrega;
 
 	@FXML
 	private Button btnSair;
@@ -210,7 +212,7 @@ public class PedidoController implements Initializable {
 	public void fazerPedido(ActionEvent event) {
 
 		Boolean dadosValidos = validarDados();
-
+		System.out.println("Dados validos" + dadosValidos);
 		if (dadosValidos) {
 
 			EntityManager entityManager = JPAUtil.getEntityManager();
@@ -229,6 +231,8 @@ public class PedidoController implements Initializable {
 			entityManager.getTransaction().commit();
 
 			entityManager.close();
+			
+			System.out.println("Cliquei no botão");
 			
 			limparCampos();
 			
@@ -288,7 +292,7 @@ public class PedidoController implements Initializable {
 		}
 
 		Pedido pedido = new Pedido(usuario, enderecoEntrega, enderecoRetirada, calcularFrete(),
-				LocalDateTime.now(), LocalDate.of(2021, Month.APRIL, 17), pesoPedido, tipoVeiculo, dsPedido.getText(),
+				LocalDateTime.now(), dtAgendarEntrega.getValue(), pesoPedido, tipoVeiculo, dsPedido.getText(),
 				servicoDeCargaEDescarga);
 
 		return pedido;
@@ -304,28 +308,30 @@ public class PedidoController implements Initializable {
 
 	private Boolean validarDados() {
 
-		ValidarDados validarDados = new ValidarDados();
 
 		Boolean textFieldsPreenchidos, cepEntregaValido, cepRetiradaValido, numeroEntregaValido, numeroRetiradaValido,
-				textAreaPreenchido;
+			textAreaPreenchido;
 
 		textFieldsPreenchidos = cepEntregaValido = textAreaPreenchido = cepRetiradaValido = numeroEntregaValido = numeroRetiradaValido = false;
 
-		textFieldsPreenchidos = validarDados.procurarTextFieldVazio(Arrays.asList(tfLogradouroRetirada,
+		textFieldsPreenchidos = !(ValidarDados.procurarTextFieldVazio(Arrays.asList(tfLogradouroRetirada,
 				tfBairroRetirada, tfLocalidadeRetirada, tfCepRetirada, tfCepEntrega, tfLogradouroEntrega,
-				tfBairroEntrega, tfLocalidadeEntrega, tfUfEntrega, tfUfRetirada, tfNumeroEntrega, tfNumeroRetirada));
+				tfBairroEntrega, tfLocalidadeEntrega, tfUfEntrega, tfUfRetirada, tfNumeroEntrega, tfNumeroRetirada)));
 
-		textAreaPreenchido = validarDados.procurarTextAreaVazio(dsPedido);
+		textAreaPreenchido = !(ValidarDados.procurarTextAreaVazio(dsPedido));
+		
+		Boolean dataValida = ValidarDados.validarDataAgendadaEntrega(dtAgendarEntrega);
+		System.out.println("Data válida" + dataValida);
 
-		Boolean camposPreenchidos = textFieldsPreenchidos && textAreaPreenchido;
+		Boolean camposPreenchidos = textFieldsPreenchidos && textAreaPreenchido && dataValida;
 
 		if (camposPreenchidos) {
 
-			cepEntregaValido = validarDados.validarCEP(tfCepEntrega);
-			cepRetiradaValido = validarDados.validarCEP(tfCepRetirada);
+			cepEntregaValido = ValidarDados.validarCEP(tfCepEntrega);
+			cepRetiradaValido = ValidarDados.validarCEP(tfCepRetirada);
 
-			numeroEntregaValido = validarDados.validarNumero(tfNumeroEntrega);
-			numeroRetiradaValido = validarDados.validarNumero(tfNumeroRetirada);
+			numeroEntregaValido = ValidarDados.validarNumero(tfNumeroEntrega);
+			numeroRetiradaValido = ValidarDados.validarNumero(tfNumeroRetirada);
 		}
 
 		Boolean CEPsValidos = cepEntregaValido && cepRetiradaValido;
@@ -353,6 +359,7 @@ public class PedidoController implements Initializable {
 		tfUfRetirada.clear();
 		dsPedido.clear();
 		checkServicoCarregamento.selectedProperty().setValue(false);
+		dtAgendarEntrega.setValue(null);
 	}
 
 }
