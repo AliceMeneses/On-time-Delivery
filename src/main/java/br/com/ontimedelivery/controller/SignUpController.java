@@ -52,8 +52,6 @@ public class SignUpController {
 			Usuario usuario = new Usuario(tfSingUpNome.getText(), tfSingUpTel.getText(), tfSingUpEmail.getText(),
 					pfSingUpSenha.getText());
 
-			ValidarDados validarDados = new ValidarDados();
-
 			Boolean usuarioNaoExiste = !(usuarioDAO.buscarUsuarioCadastrado(usuario));
 
 			if (usuarioNaoExiste) {
@@ -64,7 +62,7 @@ public class SignUpController {
 				
 				entityManager.getTransaction().commit();
 
-				validarDados.validarCadastroDoUsuario(
+				ValidarDados.validarCadastroDoUsuario(
 						Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha));
 
 				limparCampos();
@@ -72,7 +70,7 @@ public class SignUpController {
 				Main.mudarParaPedidoScene(usuario);
 			} else {
 
-				validarDados.invalidarCadastroDoUsuario(
+				ValidarDados.invalidarCadastroDoUsuario(
 						Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha));
 			}
 
@@ -92,19 +90,18 @@ public class SignUpController {
 
 	private boolean validarDados() {
 
-		ValidarDados validarDados = new ValidarDados();
 		boolean textFieldsPreenchidos, emailValido, telefoneValido, senhasIguais;
 
 		emailValido = telefoneValido = senhasIguais = false;
 
-		textFieldsPreenchidos = validarDados.procurarTextFieldVazio(
-				Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha));
+		textFieldsPreenchidos = !(ValidarDados.procurarTextFieldVazio(
+				Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha)));
 
 		if (textFieldsPreenchidos) {
 
-			emailValido = validarDados.validarEmail(tfSingUpEmail);
-			telefoneValido = validarDados.validarTelefone(tfSingUpTel);
-			senhasIguais = validarDados.validarSenhaDeCadastro(pfSingUpSenha, pfSingUpReSenha);
+			emailValido = ValidarDados.validarEmail(tfSingUpEmail);
+			telefoneValido = ValidarDados.validarTelefone(tfSingUpTel);
+			senhasIguais = ValidarDados.validarSenhaDeCadastro(pfSingUpSenha, pfSingUpReSenha);
 		}
 
 		return emailValido && textFieldsPreenchidos && telefoneValido && senhasIguais;

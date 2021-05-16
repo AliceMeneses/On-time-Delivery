@@ -28,6 +28,7 @@ public class LoginController {
 	
 	@FXML
 	private void signUp(ActionEvent event) {
+		
 		limparCampos();
 		Main.mudarParaSignUpScene();
 	}
@@ -45,24 +46,21 @@ public class LoginController {
 			
 			UsuarioDAO usuarioDAO;
 			entityManager = JPAUtil.getEntityManager();
-			
-			ValidarDados validarDados = new ValidarDados();
-			
+						
 			usuarioDAO = new UsuarioDAO(entityManager);
 
 			usuario = usuarioDAO.buscarUsuario(usuario);
 
 			if (usuario != null) {
-				validarDados.validarTextFieldsDoUsuario(tfEmail, tfSenha);
+				ValidarDados.validarTextFieldsDoUsuario(tfEmail, tfSenha);
 				limparCampos();
 				Main.mudarParaPedidoScene(usuario);
 			} else {
-				validarDados.invalidarTextFieldsDosUsuario(tfEmail, tfSenha);
+				ValidarDados.invalidarTextFieldsDosUsuario(tfEmail, tfSenha);
 			}
-		}
-		
-		entityManager.close();
-		
+			
+			entityManager.close();
+		}		
 	}
 	
 	private void limparCampos() {
@@ -72,13 +70,12 @@ public class LoginController {
 
 	private boolean validarDados() {
 
-		ValidarDados validarDados = new ValidarDados();
 		boolean textFieldsPreenchidos, emailValido = false;
 		
-		textFieldsPreenchidos = validarDados.procurarTextFieldVazio(Arrays.asList(tfEmail, tfSenha));
+		textFieldsPreenchidos = !(ValidarDados.procurarTextFieldVazio(Arrays.asList(tfEmail, tfSenha)));
 
 		if(textFieldsPreenchidos) {
-			emailValido = validarDados.validarEmail(tfEmail);		
+			emailValido = ValidarDados.validarEmail(tfEmail);		
 		}
 		
 		return emailValido && textFieldsPreenchidos;
