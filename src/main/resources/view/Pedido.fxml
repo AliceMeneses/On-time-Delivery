@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="937.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/8.0.281" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ontimedelivery.controller.PedidoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="937.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ontimedelivery.controller.PedidoController">
    <children>
       <AnchorPane layoutY="61.0" prefHeight="419.0" prefWidth="600.0" style="-fx-background-color: #6aac5c;" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
          <children>
@@ -75,13 +75,18 @@
                   <Font name="Tahoma" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="327.0" layoutY="385.0" text="Taxa de entrega : 10.50" textFill="WHITE">
+            <Label fx:id="lbFrete" layoutX="404.0" layoutY="385.0" text="Frete: R$ " textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
             </Label>
             <TextField fx:id="tfNumeroRetirada" layoutX="854.0" layoutY="128.0" prefHeight="25.0" prefWidth="69.0" promptText="Número" />
             <TextField fx:id="tfNumeroEntrega" layoutX="854.0" layoutY="264.0" prefHeight="25.0" prefWidth="69.0" promptText="Número" />
+            <Button fx:id="btnCalcularFrete" layoutX="25.0" layoutY="379.0" mnemonicParsing="false" onAction="#calcularFrete" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #514d4d; -fx-border-radius: 4;" text="Calcular frete" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <ImageView fitHeight="62.0" fitWidth="54.0" layoutX="262.0" layoutY="8.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
