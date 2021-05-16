@@ -92,5 +92,9 @@ public class Endereco {
 		return cep;
 	}
 	
-	
+	public String getEnderecoCompleto() {
+		
+		String enderecoCompleto =String.format("%s,%s,%s-%s,%s", this.logradouro, this.numero, this.bairro, this.localidade, this.uf);
+		return enderecoCompleto.replace(" ", "");
+	}
 }
