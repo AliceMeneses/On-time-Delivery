@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
@@ -14,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="937.0" style="-fx-background-color: #f5f0ea;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.ontimedelivery.controller.PedidoController">
    <children>
-      <AnchorPane layoutY="61.0" prefHeight="419.0" prefWidth="600.0" style="-fx-background-color: #6aac5c;" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0">
+      <AnchorPane layoutX="1.0" layoutY="62.0" prefHeight="419.0" prefWidth="600.0" style="-fx-background-color: #6aac5c;" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="62.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="362.0" layoutY="14.0" prefHeight="46.0" prefWidth="214.0" text="Fazer Pedido" textFill="WHITE">
                <font>
@@ -75,7 +76,7 @@
                   <Font name="Tahoma" size="18.0" />
                </font>
             </Button>
-            <Label fx:id="lbFrete" layoutX="404.0" layoutY="385.0" text="Frete: R$ " textFill="WHITE">
+            <Label fx:id="lbFrete" layoutX="395.0" layoutY="385.0" text="Frete: R$ " textFill="WHITE">
                <font>
                   <Font name="Tahoma" size="18.0" />
                </font>
@@ -87,6 +88,7 @@
                   <Font name="Tahoma" size="18.0" />
                </font>
             </Button>
+            <DatePicker fx:id="dtAgendarEntrega" layoutX="421.0" layoutY="345.0" promptText="Agendar entrega" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="62.0" fitWidth="54.0" layoutX="262.0" layoutY="8.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
