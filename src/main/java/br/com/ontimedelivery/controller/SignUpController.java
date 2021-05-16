@@ -67,6 +67,8 @@ public class SignUpController {
 				validarDados.validarCadastroDoUsuario(
 						Arrays.asList(tfSingUpNome, tfSingUpEmail, tfSingUpTel, pfSingUpSenha, pfSingUpReSenha));
 
+				limparCampos();
+				
 				Main.mudarParaPedidoScene(usuario);
 			} else {
 
@@ -82,6 +84,9 @@ public class SignUpController {
 	
 	@FXML
 	public void voltarParaLogin(ActionEvent event) {
+		
+		limparCampos();
+		
 		Main.mudarParaLoginScene();
 	}
 
@@ -103,6 +108,15 @@ public class SignUpController {
 		}
 
 		return emailValido && textFieldsPreenchidos && telefoneValido && senhasIguais;
+	}
+	
+	private void limparCampos() {
+		
+		pfSingUpReSenha.clear();
+		pfSingUpSenha.clear();
+		tfSingUpEmail.clear();
+		tfSingUpNome.clear();
+		tfSingUpTel.clear();
 	}
 
 }

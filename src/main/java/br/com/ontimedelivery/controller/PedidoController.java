@@ -171,6 +171,9 @@ public class PedidoController implements Initializable {
 
 	@FXML
 	public void sair(ActionEvent event) {
+		
+		limparCampos();
+		
 		Main.mudarParaLoginScene();
 	}
 
@@ -226,7 +229,9 @@ public class PedidoController implements Initializable {
 			entityManager.getTransaction().commit();
 
 			entityManager.close();
-
+			
+			limparCampos();
+			
 			Main.mudarParaSucessoPedidoScene();
 		}
 
@@ -328,6 +333,26 @@ public class PedidoController implements Initializable {
 		Boolean numerosValidos = numeroEntregaValido && numeroRetiradaValido;
 
 		return camposPreenchidos && CEPsValidos && numerosValidos;
+	}
+	
+	private void limparCampos() {
+		
+		tfBairroEntrega.clear();
+		tfBairroRetirada.clear();
+		tfCepEntrega.clear();
+		tfCepRetirada.clear();
+		tfComplementoEntrega.clear();
+		tfComplementoRetirada.clear();
+		tfLocalidadeEntrega.clear();
+		tfLocalidadeRetirada.clear();
+		tfLogradouroEntrega.clear();
+		tfLogradouroRetirada.clear();
+		tfNumeroEntrega.clear();
+		tfNumeroRetirada.clear();
+		tfUfEntrega.clear();
+		tfUfRetirada.clear();
+		dsPedido.clear();
+		checkServicoCarregamento.selectedProperty().setValue(false);
 	}
 
 }

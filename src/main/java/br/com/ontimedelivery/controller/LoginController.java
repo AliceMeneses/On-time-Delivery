@@ -28,6 +28,7 @@ public class LoginController {
 	
 	@FXML
 	private void signUp(ActionEvent event) {
+		limparCampos();
 		Main.mudarParaSignUpScene();
 	}
 
@@ -53,6 +54,7 @@ public class LoginController {
 
 			if (usuario != null) {
 				validarDados.validarTextFieldsDoUsuario(tfEmail, tfSenha);
+				limparCampos();
 				Main.mudarParaPedidoScene(usuario);
 			} else {
 				validarDados.invalidarTextFieldsDosUsuario(tfEmail, tfSenha);
@@ -61,6 +63,11 @@ public class LoginController {
 		
 		entityManager.close();
 		
+	}
+	
+	private void limparCampos() {
+		tfEmail.clear();
+		tfSenha.clear();
 	}
 
 	private boolean validarDados() {
