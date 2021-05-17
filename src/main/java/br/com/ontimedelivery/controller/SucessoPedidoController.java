@@ -8,7 +8,7 @@ package br.com.ontimedelivery.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.com.ontimedelivery.Main;
+import br.com.ontimedelivery.MainFX;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +28,6 @@ public class SucessoPedidoController implements Initializable {
     @FXML
 	public void fazerNovoPedido(ActionEvent event) {
     	
-    	Main.mudarParaPedidoScene(null);
+    	MainFX.mudarParaPedidoScene(null);
     }
 }

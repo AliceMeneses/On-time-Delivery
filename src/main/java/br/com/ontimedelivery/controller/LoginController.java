@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 
-import br.com.ontimedelivery.Main;
+import br.com.ontimedelivery.MainFX;
 import br.com.ontimedelivery.dao.UsuarioDAO;
 import br.com.ontimedelivery.model.Usuario;
 import br.com.ontimedelivery.util.JPAUtil;
@@ -30,7 +30,7 @@ public class LoginController {
 	private void signUp(ActionEvent event) {
 		
 		limparCampos();
-		Main.mudarParaSignUpScene();
+		MainFX.mudarParaSignUpScene();
 	}
 
 	@FXML
@@ -54,7 +54,7 @@ public class LoginController {
 			if (usuario != null) {
 				ValidarDados.validarTextFieldsDoUsuario(tfEmail, tfSenha);
 				limparCampos();
-				Main.mudarParaPedidoScene(usuario);
+				MainFX.mudarParaPedidoScene(usuario);
 			} else {
 				ValidarDados.invalidarTextFieldsDosUsuario(tfEmail, tfSenha);
 			}

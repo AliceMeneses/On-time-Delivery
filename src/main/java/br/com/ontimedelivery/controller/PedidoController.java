@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 
-import br.com.ontimedelivery.Main;
+import br.com.ontimedelivery.MainFX;
 import br.com.ontimedelivery.api.BuscaDistancia;
 import br.com.ontimedelivery.api.BuscaEndereco;
 import br.com.ontimedelivery.dao.EnderecoDAO;
@@ -176,7 +176,7 @@ public class PedidoController implements Initializable {
 		
 		limparCampos();
 		
-		Main.mudarParaLoginScene();
+		MainFX.mudarParaLoginScene();
 	}
 
 	@FXML
@@ -234,7 +234,7 @@ public class PedidoController implements Initializable {
 						
 			limparCampos();
 			
-			Main.mudarParaSucessoPedidoScene();
+			MainFX.mudarParaSucessoPedidoScene();
 		}
 
 	}

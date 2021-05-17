@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 
-import br.com.ontimedelivery.Main;
+import br.com.ontimedelivery.MainFX;
 import br.com.ontimedelivery.dao.UsuarioDAO;
 import br.com.ontimedelivery.model.Usuario;
 import br.com.ontimedelivery.util.JPAUtil;
@@ -67,7 +67,7 @@ public class SignUpController {
 
 				limparCampos();
 				
-				Main.mudarParaPedidoScene(usuario);
+				MainFX.mudarParaPedidoScene(usuario);
 			} else {
 
 				ValidarDados.invalidarCadastroDoUsuario(
@@ -85,7 +85,7 @@ public class SignUpController {
 		
 		limparCampos();
 		
-		Main.mudarParaLoginScene();
+		MainFX.mudarParaLoginScene();
 	}
 
 	private boolean validarDados() {

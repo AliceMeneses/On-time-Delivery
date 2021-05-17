@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+public class MainFX extends Application{
 
 	private static Scene loginScene;
 	private static Scene pedidoScene;
