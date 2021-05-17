@@ -231,9 +231,7 @@ public class PedidoController implements Initializable {
 			entityManager.getTransaction().commit();
 
 			entityManager.close();
-			
-			System.out.println("Cliquei no botão");
-			
+						
 			limparCampos();
 			
 			Main.mudarParaSucessoPedidoScene();
@@ -321,7 +319,6 @@ public class PedidoController implements Initializable {
 		textAreaPreenchido = !(ValidarDados.procurarTextAreaVazio(dsPedido));
 		
 		Boolean dataValida = ValidarDados.validarDataAgendadaEntrega(dtAgendarEntrega);
-		System.out.println("Data válida" + dataValida);
 
 		Boolean camposPreenchidos = textFieldsPreenchidos && textAreaPreenchido && dataValida;
 
@@ -351,12 +348,12 @@ public class PedidoController implements Initializable {
 		tfComplementoRetirada.clear();
 		tfLocalidadeEntrega.clear();
 		tfLocalidadeRetirada.clear();
+		tfUfRetirada.clear();
 		tfLogradouroEntrega.clear();
 		tfLogradouroRetirada.clear();
 		tfNumeroEntrega.clear();
 		tfNumeroRetirada.clear();
 		tfUfEntrega.clear();
-		tfUfRetirada.clear();
 		dsPedido.clear();
 		checkServicoCarregamento.selectedProperty().setValue(false);
 		dtAgendarEntrega.setValue(null);
