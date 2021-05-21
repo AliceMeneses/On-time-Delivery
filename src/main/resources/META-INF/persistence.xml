@@ -23,6 +23,15 @@
 			<property name="hibernate.format_sql" value="true" />
 
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+			
+			<property name="hibernate.c3p0.min_size" value="5" />
+            <property name="hibernate.c3p0.max_size" value="20" />
+            
+            <!-- Aumentei devido o banco hospedado no heroku ser gratuito, o que gera uma lentidão de resposta -->
+            <property name="hibernate.c3p0.timeout" value="2000" />
+            
+            <property name="hibernate.c3p0.max_statements" value="50" />
+            <property name="hibernate.c3p0.idle_test_period" value="120" />
 		</properties>
 	</persistence-unit>
 </persistence>
