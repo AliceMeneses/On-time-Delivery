@@ -366,6 +366,7 @@ public class PedidoController implements Initializable {
 		dsPedido.clear();
 		checkServicoCarregamento.selectedProperty().setValue(false);
 		dtAgendarEntrega.setValue(null);
+		lbFrete.setText("Frete: R$");
 	}
 
 }
