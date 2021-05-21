@@ -186,7 +186,12 @@ public class PedidoController implements Initializable {
 
 		if (dadosValidos) {
 			
-			String frete = calcularFrete().toString();
+			BigDecimal frete = calcularFrete();
+			
+			if(frete == null) {
+				MainFX.mostrarMensagemErro("Não conseguimos calcular o frete, tente novamente mais tarde.");
+				return;
+			}
 			
 			lbFrete.setText("Frete: R$" + frete);
 		}
@@ -202,9 +207,13 @@ public class PedidoController implements Initializable {
 		
 		BuscaDistancia buscaDistancia = new BuscaDistancia();
 		String distancia = buscaDistancia.medirDistancia(enderecoEntrega.getEnderecoCompleto(), enderecoRetirada.getEnderecoCompleto());
-
+		
+		if(distancia == null) {
+			return null;
+		}
+		
 		precoFrete = precoPorKM.multiply(new BigDecimal(distancia));
-
+		
 		return precoFrete;
 	}
 
@@ -212,7 +221,7 @@ public class PedidoController implements Initializable {
 	public void fazerPedido(ActionEvent event) {
 
 		Boolean dadosValidos = validarDados();
-		System.out.println("Dados validos" + dadosValidos);
+
 		if (dadosValidos) {
 
 			EntityManager entityManager = JPAUtil.getEntityManager();
